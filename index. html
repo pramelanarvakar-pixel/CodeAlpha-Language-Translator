@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CodeAlpha - Translator</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body { font-family: Arial; background: #f0f2f5; padding: 20px; margin: 0; }
+        .container { max-width: 500px; margin: auto; background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        h2 { color: #1877f2; text-align: center; margin-top: 0; }
+        textarea, select, button { width: 100%; padding: 12px; margin: 8px 0; border-radius: 8px; border: 1px solid #ddd; font-size: 16px; box-sizing: border-box; }
+        button { background: #1877f2; color: white; font-weight: bold; cursor: pointer; border: none; }
+        #output { background: #e7f3ff; padding: 15px; border-radius: 8px; margin-top: 15px; min-height: 50px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>CodeAlpha Language Translator</h2>
+        <textarea id="inputText" placeholder="Enter text here..." rows="4"></textarea>
+        <select id="sourceLang">
+            <option value="en">English</option>
+            <option value="hi">Hindi</option>
+            <option value="mr">Marathi</option>
+        </select>
+        <select id="targetLang">
+            <option value="hi">Hindi</option>
+            <option value="en">English</option>
+            <option value="mr">Marathi</option>
+        </select>
+        <button onclick="translateText()">Translate</button>
+        <div id="output">Translated text will appear here...</div>
+    </div>
+    <script>
+        async function translateText() {
+            const text = document.getElementById('inputText').value;
+            const source = document.getElementById('sourceLang').value;
+            const target = document.getElementById('targetLang').value;
+            const output = document.getElementById('output');
+            if (!text) { output.innerText = "Please enter some text first!"; return; }
+            output.innerText = "Translating...";
+            const url = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=${source}|${target}`;
+            try {
+                const response = await fetch(url);
+                const data = await response.json();
+                output.innerText = data.responseData.translatedText;
+            } catch (error) { output.innerText = "Error: Try again."; }
+        }
+    </script>
+</body>
+</html>
