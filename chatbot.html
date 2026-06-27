@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CodeAlpha - ChatBot</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body { font-family: Arial; background: #f0f2f5; padding: 20px; margin: 0; }
+        .container { max-width: 500px; margin: auto; background: white; padding: 25px; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        h2 { color: #1877f2; text-align: center; margin-bottom: 20px; }
+        #chatbox { height: 350px; overflow-y: auto; border: 1px solid #ddd; border-radius: 8px; padding: 10px; margin-bottom: 10px; background: #fafafa; }
+        .user { text-align: right; margin: 8px 0; }
+        .user span { background: #1877f2; color: white; padding: 8px 12px; border-radius: 18px 18px 0 18px; display: inline-block; max-width: 70%; }
+        .bot { text-align: left; margin: 8px 0; }
+        .bot span { background: #e4e6eb; color: black; padding: 8px 12px; border-radius: 18px 18px 18px 0; display: inline-block; max-width: 70%; }
+        input, button { width: 100%; padding: 12px; margin: 5px 0; border-radius: 8px; border: 1px solid #ddd; font-size: 16px; box-sizing: border-box; }
+        button { background: #1877f2; color: white; font-weight: bold; border: none; cursor: pointer; }
+        .nav { text-align: center; margin-top: 15px; }
+        .nav a { color: #1877f2; text-decoration: none; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>🤖 CodeAlpha ChatBot</h2>
+        <div id="chatbox">
+            <div class="bot"><span>Hi! Main CodeAlpha Bot hu. Kaise madad karu?</span></div>
+        </div>
+        <input type="text" id="userInput" placeholder="Message likho..." onkeypress="if(event.key==='Enter')sendMessage()">
+        <button onclick="sendMessage()">Send</button>
+        <div class="nav"><a href="index.html">🌐 Translator pe jaao</a></div>
+    </div>
+    <script>
+        function sendMessage() {
+            const input = document.getElementById('userInput');
+            const msg = input.value.trim();
+            if (!msg) return;
+            
+            const chatbox = document.getElementById('chatbox');
+            chatbox.innerHTML += `<div class="user"><span>${msg}</span></div>`;
+            
+            let reply = "Sorry, main ye samjha nahi. 'hello', 'help', 'task' try karo.";
+            const lowerMsg = msg.toLowerCase();
+            
+            if (lowerMsg.includes('hello') || lowerMsg.includes('hi')) reply = "Namaste! 🙏 Kaise ho aap?";
+            else if (lowerMsg.includes('help')) reply = "Main 'task', 'codealpha', ya 'time' ka jawab de sakta hu.";
+            else if (lowerMsg.includes('task')) reply = "Task 1: Translator ✅ Complete. Task 2: ChatBot ✅ Running now.";
+            else if (lowerMsg.includes('codealpha')) reply = "CodeAlpha ek internship platform hai jahan hum real projects banate hain.";
+            else if (lowerMsg.includes('time')) reply = "Abhi ka time: " + new Date().toLocaleTimeString();
+            else if (lowerMsg.includes('thank')) reply = "Welcome bhai! 😊";
+            else if (lowerMsg.includes('bye')) reply = "Bye bye! Phir milte hain 👋";
+            
+            setTimeout(() => {
+                chatbox.innerHTML += `<div class="bot"><span>${reply}</span></div>`;
+                chatbox.scrollTop = chatbox.scrollHeight;
+            }, 500);
+            
+            input.value = '';
+            chatbox.scrollTop = chatbox.scrollHeight;
+        }
+    </script>
+</body>
+</html>
